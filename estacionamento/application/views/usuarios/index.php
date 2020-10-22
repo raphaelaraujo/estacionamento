@@ -61,10 +61,10 @@
                                                     '<span class="badge badge-pill badge-success mb-1">Sim</span>' : 
                                                     '<span class="badge badge-pill badge-danger mb-1">Não</span>'?></td>
                                                     <td class="text-right">
-                                                        <a title="Editar usuário" href="#" class="btn btn-icon btn-primary">
+                                                        <a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class();?>" href="<?php echo base_url('usuarios/core/' . $user->id);?>" class="btn btn-icon btn-primary">
                                                             <i class="ik ik-edit"></i>
                                                         </a>
-                                                        <a title="Excluir usuário" href="#" class="btn btn-icon btn-danger">
+                                                        <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class();?>" href="#" class="btn btn-icon btn-danger">
                                                             <i class="ik ik-trash-2"></i>
                                                         </a>
                                                     </td>
