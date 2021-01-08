@@ -4,20 +4,24 @@ defined('BASEPATH') OR exit('Ação não permitida');
 
 class Usuarios extends CI_Controller {
 
-    public function __construct(){
+    public function __construct() {
         parent::__construct();
 
-        if (!$this->ion_auth->logged_in())
-        {
+        if (!$this->ion_auth->logged_in()) {
             redirect('login');
         }
     }
 
     public function index() {
 
+        if (!$this->ion_auth->is_admin()) {
+            $this->session->set_flashdata('info', 'Você não tem permissão de acesso a este menu!');
+            redirect('/');
+        }
+
         $data = array(
             'titulo' => 'Usuários cadastrados',
-            'subtitulo' => 'Chegou a hora de listar todos os usuários cadastrados no banco de dados',
+            'subtitulo' => 'Listar usuários cadastrados no sistema',
             'styles' => array(
                 'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
             ),
@@ -43,6 +47,12 @@ class Usuarios extends CI_Controller {
     public function core($usuario_id = NULL) {
 
         if (!$usuario_id) {
+
+            if (!$this->ion_auth->is_admin()) {
+                $this->session->set_flashdata('info', 'Você não tem permissão de acesso a este menu!');
+                redirect('/');
+            }
+
             //Cadastra novo usuario
             $this->form_validation->set_rules('first_name', 'Nome', 'trim|required|min_length[3]|max_length[50]');
             $this->form_validation->set_rules('last_name', 'Sobrenome', 'trim|required|min_length[3]|max_length[50]');
@@ -92,6 +102,13 @@ class Usuarios extends CI_Controller {
             }
         } else {
             //Edita usuário
+
+            if ($this->session->userdata('user_id') != $usuario_id && !$this->ion_auth->is_admin()) {
+                $this->session->set_flashdata('error', 'Você não pode editar um usuário diferente do seu!');
+                redirect('/');
+            }
+
+
             if (!$this->ion_auth->user($usuario_id)->row()) {
                 exit('Usuário não existe');
             } else {
@@ -107,28 +124,20 @@ class Usuarios extends CI_Controller {
 
                 if ($this->form_validation->run()) {
 
-                    /*
-                      [first_name] => Admin
-                      [last_name] => istrator
-                      [username] => administrator
-                      [email] => admin@admin.com
-                      [password] =>
-                      [confirmacao] =>
-                      [perfil] => 1
-                      [active] => 1
-                      [usuario_id] => 1
-                     */
-
                     $data = elements(
                             array(
-                        'first_name',
-                        'last_name',
-                        'username',
-                        'email',
-                        'password',
-                        'active',
+                                'first_name',
+                                'last_name',
+                                'username',
+                                'email',
+                                'password',
+                                'active',
                             ), $this->input->post()
                     );
+
+                    if (!$this->ion_auth->is_admin()) {
+                        unset($data['active']);
+                    }
 
                     $password = $this->input->post('password');
 
@@ -147,9 +156,12 @@ class Usuarios extends CI_Controller {
                     if ($this->ion_auth->update($usuario_id, $data)) {
                         $perfil_post = $this->input->post('perfil');
 
-                        if ($perfil_atual->id != $perfil_post) {
-                            $this->ion_auth->remove_from_group($perfil_atual->id, $usuario_id);
-                            $this->ion_auth->add_to_group($perfil_post, $usuario_id);
+                        //se foi passado o 'perfil', então é admin
+                        if ($perfil_post) {
+                            if ($perfil_atual->id != $perfil_post) {
+                                $this->ion_auth->remove_from_group($perfil_atual->id, $usuario_id);
+                                $this->ion_auth->add_to_group($perfil_post, $usuario_id);
+                            }
                         }
 
                         $this->session->set_flashdata('sucesso', 'Dados atualizados com sucesso');
@@ -157,12 +169,16 @@ class Usuarios extends CI_Controller {
                         $this->session->set_flashdata('error', 'Não foi possível atualizar os dados');
                     }
 
-                    redirect($this->router->fetch_class());
+                    if (!$this->ion_auth->is_admin()) {
+                        redirect('/');
+                    } else {
+                        redirect($this->router->fetch_class());
+                    }
                 } else {
                     //Erro de validação
                     $data = array(
                         'titulo' => 'Editar usuário',
-                        'subtitulo' => 'Chegou a hora de editar o usuário',
+                        'subtitulo' => 'Editar o usuário',
                         'icone_view' => 'ik ik-user',
                         'usuario' => $this->ion_auth->user($usuario_id)->row(), // get user
                         'perfil_usuario' => $this->ion_auth->get_users_groups($usuario_id)->row(),
@@ -210,6 +226,11 @@ class Usuarios extends CI_Controller {
 
     public function del($usuario_id = NULL) {
 
+        if ($this->session->userdata('user_id') != $usuario_id && !$this->ion_auth->is_admin()) {
+            $this->session->set_flashdata('error', 'Você não pode editar um usuário diferente do seu!');
+            redirect('/');
+        }
+
         if (!$usuario_id || !$this->core_model->get_by_id('users', array('id' => $usuario_id))) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');
             redirect($this->router->fetch_class());
@@ -219,13 +240,13 @@ class Usuarios extends CI_Controller {
                 $this->session->set_flashdata('error', 'Administrador não pode ser excluído');
                 redirect($this->router->fetch_class());
             }
-            
+
             if ($this->ion_auth->delete_user($usuario_id)) {
                 $this->session->set_flashdata('sucesso', 'Registro excluído com sucesso!');
             } else {
                 $this->session->set_flashdata('error', 'Não foi possível excluir o registro');
             }
-            
+
             redirect($this->router->fetch_class());
         }
     }

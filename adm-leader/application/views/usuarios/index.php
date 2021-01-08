@@ -45,7 +45,7 @@
                 </div>
 
             <?php endif; ?>
-            
+
             <?php if ($message = $this->session->flashdata('error')): ?>
 
                 <div class="row">
@@ -87,7 +87,7 @@
                                             <td><?php echo $user->username ?></td>
                                             <td><?php echo $user->email ?></td>
                                             <td><?php echo $user->first_name ?></td>
-                                            <td><?php echo ($this->ion_auth->is_admin($user->id) ? 'Administrador' : 'Atendente') ?>
+                                            <td><?php echo ($this->ion_auth->is_admin($user->id) ? 'Administrador' : 'Básico') ?>
                                             </td>
                                             <td><?php
                                                 echo $user->active == 1 ?
@@ -120,7 +120,7 @@
                                                 <div class="modal-footer">
                                                     <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
                                                     <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
-                                                    Sim, excluir
+                                                        Sim, excluir
                                                     </a>
                                                 </div>
                                             </div>
