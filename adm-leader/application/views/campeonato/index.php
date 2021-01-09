@@ -65,7 +65,7 @@
                 <div class="col-md-12">
                     <div class="card">  
                         <div class="card-header">
-                            <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core_competicao/') ?>" class="btn btn-success"> + Gerar tabela</a>
+                            <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core_competicao') ?>" class="btn btn-success"> + Gerar tabela</a>
                         </div>
                         <div class="card-body">
                             <table class="table data_table">
@@ -92,12 +92,12 @@
                                             <td><?php echo formata_data_banco_sem_hora($campeonato->season_start) ?></td>   
                                             <td><?php echo formata_data_banco_sem_hora($campeonato->season_end) ?></td>   
                                             <td class="text-right">
-                                                <a data-toggle="tooltip" data-placement="bottom" title="Editar  <?php echo $this->router->fetch_class(); ?>" class="btn btn-icon btn-primary text-white">
+                                                <a href="<?php echo base_url($this->router->fetch_class() . '/core_geral/' . $campeonato->league_id); ?>" data-toggle="tooltip" data-placement="bottom" title="Executar cadastros" class="btn btn-icon btn-primary text-white">
+                                                    <i class="ik ik-download"></i>
+                                                </a> 
+                                                <a data-toggle="tooltip" data-placement="bottom" title="Informações complementares" class="btn btn-icon btn-primary text-white">
                                                     <i class="ik ik-edit"></i>
                                                 </a>
-                                                <button type="button" data-placement="bottom" title="Excluir  <?php echo $this->router->fetch_class(); ?>" class="btn btn-icon btn-danger text-white">
-                                                    <i class="ik ik-trash-2"></i>
-                                                </button>
                                             </td>
                                         </tr>
 
