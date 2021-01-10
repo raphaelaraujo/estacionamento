@@ -34,14 +34,17 @@
                 <div class="nav-item">
                     <a href="<?php echo base_url('api_football_campeonato') ?>"><i class="ik ik-flag"></i><span>Gerenciar Campeonatos</span></a>
                 </div>
+                <div class="nav-item">
+                    <a href="<?php echo base_url('api_football_time') ?>"><i class="ik ik-shield"></i><span>Gerenciar Times</span></a>
+                </div>
+                <div class="nav-item">
+                    <a href="<?php echo base_url('api_football_campeonato') ?>"><i class="ik ik-aperture"></i><span>Gerenciar Jogos</span></a>
+                </div>
                 <?php if ($this->ion_auth->is_admin()) : ?>
                     <div class="nav-item">
                         <a href="<?php echo base_url('usuarios') ?>"><i class="ik ik-users"></i><span>Gerenciar Usuários</span></a>
                     </div>
-                <?php endif; ?> 
-                <div class="nav-item">
-                    <a href="pages/table-datatable.html"><i class="ik ik-inbox"></i><span>Data Table</span></a>
-                </div>           
+                <?php endif; ?>                
             </nav>
         </div>
     </div>

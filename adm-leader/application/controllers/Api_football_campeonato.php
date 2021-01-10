@@ -79,43 +79,30 @@ class Api_football_campeonato extends CI_Controller {
 
             for ($contador = 0; $contador < $qtd; $contador++) {
 
-                $data['team_id'] = $value->teams[$contador]->team_id;
-                $data['team_league_id'] = $league_id;
-                $data['name_team'] = $value->teams[$contador]->name;
-                $data['logo_team'] = $value->teams[$contador]->logo;
-                $data['country_team'] = $value->teams[$contador]->country;
-                $data['venue_name'] = $value->teams[$contador]->venue_name;
-                $data['venue_address'] = $value->teams[$contador]->venue_address;
-                $data['venue_city'] = $value->teams[$contador]->venue_city;
-                $data['venue_capacity'] = $value->teams[$contador]->venue_capacity;
+                $data_league_time['team_id'] = $value->teams[$contador]->team_id;
+                $data_league_time['team_league_id'] = $league_id;
+                $data_league_time['name_team'] = $value->teams[$contador]->name;
+                $data_league_time['logo_team'] = $value->teams[$contador]->logo;
+                $data_league_time['country_team'] = $value->teams[$contador]->country;
+                $data_league_time['venue_name'] = $value->teams[$contador]->venue_name;
+                $data_league_time['venue_address'] = $value->teams[$contador]->venue_address;
+                $data_league_time['venue_city'] = $value->teams[$contador]->venue_city;
+                $data_league_time['venue_capacity'] = $value->teams[$contador]->venue_capacity;
 
-                $this->core_football_model->insert('time_league_football', $data);
-            }
-        }
-    }
-
-    public function core_time($league_id) {
-
-        $operacao = "teams/league/" . $league_id;
-        $resposta = $this->api_model->executa_api_football($operacao);
-
-        foreach ($resposta as $value) {
-            $qtd = $value->results;
-
-            for ($contador = 0; $contador < $qtd; $contador++) {
+                $this->core_football_model->insert('time_league_football', $data_league_time);
 
                 if (!$this->core_model->get_by_id('time_football', array('team_id' => $value->teams[$contador]->team_id))) {
 
-                    $data['team_id'] = $value->teams[$contador]->team_id;
-                    $data['name_team'] = $value->teams[$contador]->name;
-                    $data['logo_team'] = $value->teams[$contador]->logo;
-                    $data['country_team'] = $value->teams[$contador]->country;
-                    $data['venue_name'] = $value->teams[$contador]->venue_name;
-                    $data['venue_address'] = $value->teams[$contador]->venue_address;
-                    $data['venue_city'] = $value->teams[$contador]->venue_city;
-                    $data['venue_capacity'] = $value->teams[$contador]->venue_capacity;
+                    $data_time['team_id'] = $value->teams[$contador]->team_id;
+                    $data_time['name_team'] = $value->teams[$contador]->name;
+                    $data_time['logo_team'] = $value->teams[$contador]->logo;
+                    $data_time['country_team'] = $value->teams[$contador]->country;
+                    $data_time['venue_name'] = $value->teams[$contador]->venue_name;
+                    $data_time['venue_address'] = $value->teams[$contador]->venue_address;
+                    $data_time['venue_city'] = $value->teams[$contador]->venue_city;
+                    $data_time['venue_capacity'] = $value->teams[$contador]->venue_capacity;
 
-                    $this->core_football_model->insert('time_football', $data);
+                    $this->core_football_model->insert('time_football', $data_time);
                 }
             }
         }
@@ -159,28 +146,8 @@ class Api_football_campeonato extends CI_Controller {
 
     public function core_geral($league_id) {
 
-//        if ($this->core_time($league_id)) {
-//            if ($this->core_league_time($league_id)) {
-//                if ($this->core_jogos($league_id)) {
-//                    $this->session->set_flashdata('sucesso', 'Cadastro de times e jogos da competição realizado com sucesso');
-//                    redirect('/');
-//                } else {
-//                    $this->session->set_flashdata('error', 'Erro ao cadastrar jogos da competição');
-//                    redirect('/');
-//                }
-//            } else {
-//                $this->session->set_flashdata('error', 'Erro ao cadastrar times da competição');
-//                redirect('/');
-//            }
-//        } else {
-//            $this->session->set_flashdata('error', 'Erro ao cadastrar times da competição');
-//            redirect('/');
-//        }
-
-        $this->core_time($league_id);
         $this->core_league_time($league_id);
         $this->core_jogos($league_id);
-
         $this->session->set_flashdata('sucesso', 'Cadastro de times e jogos da competição realizado com sucesso');
         redirect('/');
     }

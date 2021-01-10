@@ -10,7 +10,7 @@
                 <div class="row align-items-end">
                     <div class="col-lg-8">
                         <div class="page-header-title">
-                            <i class="ik ik-flag bg-blue"></i>
+                            <i class="ik ik-shield bg-blue"></i>
                             <div class="d-inline">
                                 <h5><?php echo $titulo ?></h5>
                                 <span><?php echo $subtitulo ?></span>
@@ -64,71 +64,57 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">  
-                        <div class="card-header">
-                            <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core_competicao') ?>" class="btn btn-success"> + Gerar tabela</a>
-                        </div>
+                        <!--                        <div class="card-header">
+                                                    <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core_competicao') ?>" class="btn btn-success"> + Gerar tabela</a>
+                                                </div>-->
                         <div class="card-body">
                             <table class="table data_table">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Nome</th>
-                                        <th>Tipo</th>
                                         <th>País</th>
-                                        <th>Temporada atual</th>
-                                        <th>Inicio</th>
-                                        <th>Fim</th>
+                                        <th>Estadio</th>                                        
                                         <th class="nosort text-right pr-25">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($campeonatos as $campeonato): ?>
+                                    <?php foreach ($times as $time): ?>
                                         <tr>
-                                            <td><?php echo $campeonato->league_id ?></td>
-                                            <td><?php echo $campeonato->name ?></td>
-                                            <td><?php echo $campeonato->type ?></td>
-                                            <td><?php echo $campeonato->country ?></td>
-                                            <td><?php echo $campeonato->season ?></td>   
-                                            <td><?php echo formata_data_banco_sem_hora($campeonato->season_start) ?></td>   
-                                            <td><?php echo formata_data_banco_sem_hora($campeonato->season_end) ?></td>   
-                                            <td class="text-right">
-
-                                                <?php if (!$this->core_model->get_by_id('jogo_football', array('match_league_id ' => $campeonato->league_id))) : ?>
-                                                    <a href="<?php echo base_url($this->router->fetch_class() . '/core_geral/' . $campeonato->league_id); ?>" data-toggle="tooltip" data-placement="bottom" title="Executar cadastros" class="btn btn-icon btn-success text-white">
-                                                        <i class="ik ik-download"></i>
-                                                    </a>
-                                                <?php endif; ?>
-
-
+                                            <td><?php echo $time->team_id ?></td>
+                                            <td><?php echo $time->name_team ?></td>
+                                            <td><?php echo $time->country_team ?></td>
+                                            <td><?php echo $time->venue_name ?></td>                                            
+                                            <td class="text-right">                                               
                                                 <a data-toggle="tooltip" data-placement="bottom" title="Informações complementares" class="btn btn-icon btn-primary text-white">
                                                     <i class="ik ik-edit"></i>
                                                 </a>
                                             </td>
                                         </tr>
 
-                                    <div class="modal fade" id="user-<?php echo $campeonato->league_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterLabel">
-                                                        <i class="fas fa-exclamation-triangle text-danger"></i>
-                                                        &nbsp Tem certeza da exclusão do registro?
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Se deseja excluir o registro, clique em <strong>Sim, excluir</strong>.</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
-                                                    <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
-                                                        Sim, excluir
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
+            <!--                                    <div class="modal fade" id="user-<?php echo $campeonato->league_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalCenterLabel">
+                                                                    <i class="fas fa-exclamation-triangle text-danger"></i>
+                                                                    &nbsp Tem certeza da exclusão do registro?
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Se deseja excluir o registro, clique em <strong>Sim, excluir</strong>.</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
+                                                                <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
+                                                                    Sim, excluir
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
