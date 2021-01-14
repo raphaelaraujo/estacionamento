@@ -124,66 +124,6 @@
         <script src="<?php echo base_url('public/' . $script); ?>"></script>
     <?php endforeach; ?>
 <?php endif; ?>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        var date_last_clicked = null;
-
-        $('#calendar').fullCalendar({
-            locale: 'pt-br',
-            header: {
-              left: 'month,agendaWeek,agendaDay custom1',
-              center: 'title',
-              right: 'today, custom2 prevYear,prev,next,nextYear'
-            },
-            eventSources: [{
-                events: function(start, end, timezone, callback) {
-                    $.ajax({
-                        url: '<?php echo base_url() ?>calendar/get_events',
-                        dataType: 'json',
-                        data: {
-                            start: start.unix(),
-                            end: end.unix()
-                        },
-                        success: function(msg) {
-                            var events = msg.events;
-                            callback(events);
-                        }
-                    });
-                }
-            }, ],
-
-            selectable: true,
-            select: function(startDate, endDate, jsEvent, view, resource) {
-                //alert('selected ' + startDate.format('YYYY/MM/DD HH:mm') + ' to ' + endDate.format('YYYY/MM/DD HH:mm'));
-                $('#addModal #start_dt').val(startDate.format('DD/MM/YYYY HH:mm'));
-                $('#addModal #end_dt').val(endDate.format('DD/MM/YYYY HH:mm'));
-                $('#addModal').modal('show');
-            },
-            /*dayClick: function(date, jsEvent, view) {
-                date_last_clicked = $(this);
-                $(this).css('background-color', '#bed7f3');
-                $('#addModal').modal();
-            },*/
-            eventClick: function(event, jsEvent, view) {
-                $('#name').val(event.title);
-                $('#description').val(event.description);
-                $('#start_date').val(moment(event.start).format('DD/MM/YYYY HH:mm'));
-                if (event.end) {
-                    $('#end_date').val(moment(event.end).format('DD/MM/YYYY HH:mm'));
-                } else {
-                    $('#end_date').val(moment(event.start).format('DD/MM/YYYY HH:mm'));
-                }
-                $('#event_id').val(event.id);
-                $('#color').val(event.backgroundColor);
-                $('#editModal').modal();
-            },
-        });
-
-    });
-</script>
-
 </body>
 
 </html>

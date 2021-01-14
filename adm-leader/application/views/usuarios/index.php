@@ -68,67 +68,71 @@
                             <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core/') ?>" class="btn btn-success"> + Novo</a>
                         </div>
                         <div class="card-body">
-                            <table class="table data_table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Usuário</th>
-                                        <th>E-mail</th>
-                                        <th>Nome</th>
-                                        <th>Perfil de acesso</th>
-                                        <th>Ativo</th>
-                                        <th class="nosort text-right pr-25">Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($usuarios as $user): ?>
+                            <div class="table-responsive-sm">
+                                <table class="table data_table table-sm pl-20 pr-20">
+                                    <thead>
                                         <tr>
-                                            <td><?php echo $user->id ?></td>
-                                            <td><?php echo $user->username ?></td>
-                                            <td><?php echo $user->email ?></td>
-                                            <td><?php echo $user->first_name ?></td>
-                                            <td><?php echo ($this->ion_auth->is_admin($user->id) ? 'Administrador' : 'Básico') ?>
-                                            </td>
-                                            <td><?php
-                                                echo $user->active == 1 ?
-                                                        '<span class="badge badge-pill badge-success mb-1"><i class="fas fa-lock-open"></i>&nbsp Sim</span>' :
-                                                        '<span class="badge badge-pill badge-danger mb-1"><i class="fas fa-lock"></i>&nbsp Não</span>'
-                                                ?></td>
-                                            <td class="text-right">
-                                                <a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/core/' . $user->id); ?>" class="btn btn-icon btn-primary">
-                                                    <i class="ik ik-edit"></i>
-                                                </a>
-                                                <button type="button" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#user-<?php echo $user->id ?>">
-                                                    <i class="ik ik-trash-2"></i>
-                                                </button>
-                                            </td>
+                                            <th>#</th>
+                                            <th>Usuário</th>
+                                            <th>E-mail</th>
+                                            <th>Nome</th>
+                                            <th>Perfil de acesso</th>
+                                            <th>Ativo</th>
+                                            <th class="nosort text-right pr-25">Ações</th>
                                         </tr>
-
-                                    <div class="modal fade" id="user-<?php echo $user->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterLabel">
-                                                        <i class="fas fa-exclamation-triangle text-danger"></i>
-                                                        &nbsp Tem certeza da exclusão do registro?
-                                                    </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p>Se deseja excluir o registro, clique em <strong>Sim, excluir</strong>.</p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
-                                                    <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
-                                                        Sim, excluir
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($usuarios as $user): ?>
+                                            <tr>
+                                                <td><?php echo $user->id ?></td>
+                                                <td><?php echo $user->username ?></td>
+                                                <td><?php echo $user->email ?></td>
+                                                <td><?php echo $user->first_name ?></td>
+                                                <td><?php echo ($this->ion_auth->is_admin($user->id) ? 'Administrador' : 'Básico') ?>
+                                                </td>
+                                                <td><?php
+                                                    echo $user->active == 1 ?
+                                                            '<span class="badge badge-pill badge-success mb-1"><i class="fas fa-lock-open"></i>&nbsp Sim</span>' :
+                                                            '<span class="badge badge-pill badge-danger mb-1"><i class="fas fa-lock"></i>&nbsp Não</span>'
+                                                    ?></td>
+                                                <td class="text-right">
+                                                    <a data-toggle="tooltip" data-placement="bottom" title="Editar <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/core/' . $user->id); ?>" class="btn btn-icon btn-primary">
+                                                        <i class="ik ik-edit"></i>
                                                     </a>
+                                                    <button type="button" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#user-<?php echo $user->id ?>">
+                                                        <i class="ik ik-trash-2"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                        <div class="modal fade" id="user-<?php echo $user->id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterLabel">
+                                                            <i class="fas fa-exclamation-triangle text-danger"></i>
+                                                            &nbsp Tem certeza da exclusão do registro?
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Se deseja excluir o registro, clique em <strong>Sim, excluir</strong>.</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
+                                                        <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
+                                                            Sim, excluir
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

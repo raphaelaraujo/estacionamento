@@ -155,8 +155,8 @@ class Api_football_campeonato extends CI_Controller {
 
         $data = array(
             'titulo' => 'Times Cadastrados',
-            'subtitulo' => 'Listar times cadastrados no campeonato ' . preg_replace('/\d+/u', '', str_replace('%', ' ', $league_name)),
-            //'subtitulo' => 'Listar times cadastrados no campeonato ' . preg_replace('/[^A-Za-z0-9\-]/', '', preg_replace('/\d+/u', '', $league_name)),
+            'subtitulo' => 'Listar times cadastrados no campeonato ',
+            'nome_campeonato' => preg_replace('/\d+/u', '', str_replace('%', ' ', $league_name)),
             'styles' => array(
                 'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
             ),
@@ -174,7 +174,7 @@ class Api_football_campeonato extends CI_Controller {
     }
 
     public function index_jogos($league_id) {
-        
+
 //1 - jogo
 //rodada
 //visitante
