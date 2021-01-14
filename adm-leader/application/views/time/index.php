@@ -12,7 +12,7 @@
                         <div class="page-header-title">
                             <i class="ik ik-shield bg-blue"></i>
                             <div class="d-inline">
-                                <h5><?php echo $titulo ?></h5>
+                                <h5><?php echo $titulo ?></h5>                                
                                 <span><?php echo $subtitulo ?></span>
                             </div>
                         </div>

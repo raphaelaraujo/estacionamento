@@ -12,11 +12,10 @@ class Api_football_time extends CI_Controller {
         }
     }
 
-    public function index() {
-
-        //$this->core_competicao();
+    public function index($league_id, $league_name) {
 
         $data = array(
+            'campeonato' => $league_name,
             'titulo' => 'Times Cadastrados',
             'subtitulo' => 'Listar times cadastrados no sistema',
             'styles' => array(
@@ -27,11 +26,11 @@ class Api_football_time extends CI_Controller {
                 'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
                 'plugins/datatables.net/js/estacionamento.js',
             ),
-            'times' => $this->core_football_model->get_all_football('time_football') // get all users
+            'times' => $this->core_football_model->get_all_football('time_league_football', array('team_league_id' => $league_id)) // get all users
         );
 
         $this->load->view('layout/header', $data);
-        $this->load->view('time/index');
+        $this->load->view('../time/index');
         $this->load->view('layout/footer');
     }
 
