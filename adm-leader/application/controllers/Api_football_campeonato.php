@@ -25,7 +25,7 @@ class Api_football_campeonato extends CI_Controller {
                 'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
                 'plugins/datatables.net/js/estacionamento.js',
             ),
-            'campeonatos' => $this->core_football_model->get_all_football('competicao_football') // get all users
+            'campeonatos' => $this->core_football_model->get_all_football('competicao_football', array('season >= ' => 2019)) // get all users            
         );
 
         $this->load->view('layout/header', $data);

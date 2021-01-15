@@ -66,13 +66,10 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">  
-                        <!--                        <div class="card-header">
-                                                    <a data-toggle="tooltip" data-placement="right" title="cadastrar <?php echo $this->router->fetch_class(); ?>"href="<?php echo base_url($this->router->fetch_class() . '/core_competicao') ?>" class="btn btn-success"> + Gerar tabela</a>
-                                                </div>-->
+                    <div class="card">                       
                         <div class="card-body">
                             <div class="table-responsive-sm">
-                                <table class="table data_table table-sm pl-20 pr-20">
+                                <table class="table data-table table-sm pl-20 pr-20">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -94,35 +91,11 @@
                                                         <i class="ik ik-edit"></i>
                                                     </a>
                                                 </td>
-                                            </tr>
-
-                                                    <!--                                    <div class="modal fade" id="user-<?php echo $campeonato->league_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterLabel" aria-hidden="true">
-                                                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                                                <div class="modal-content">
-                                                                                                    <div class="modal-header">
-                                                                                                        <h5 class="modal-title" id="exampleModalCenterLabel">
-                                                                                                            <i class="fas fa-exclamation-triangle text-danger"></i>
-                                                                                                            &nbsp Tem certeza da exclusão do registro?
-                                                                                                        </h5>
-                                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                                                    </div>
-                                                                                                    <div class="modal-body">
-                                                                                                        <p>Se deseja excluir o registro, clique em <strong>Sim, excluir</strong>.</p>
-                                                                                                    </div>
-                                                                                                    <div class="modal-footer">
-                                                                                                        <button data-toggle="tooltip" data-placement="bottom" title="Cancelar exclusão" type="button" class="btn btn-secondary" data-dismiss="modal">Não, voltar</button>
-                                                                                                        <a data-toggle="tooltip" data-placement="bottom" title="Excluir <?php echo $this->router->fetch_class(); ?>" href="<?php echo base_url($this->router->fetch_class() . '/del/' . $user->id); ?>" class="btn btn-danger">
-                                                                                                            Sim, excluir
-                                                                                                        </a>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>-->
+                                            </tr>                                                   
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>
