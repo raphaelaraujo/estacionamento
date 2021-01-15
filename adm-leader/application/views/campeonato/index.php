@@ -104,7 +104,7 @@
                                                     <?php endif; ?>
 
                                                     <?php if ($this->core_model->get_by_id('jogo_football', array('match_league_id ' => $campeonato->league_id))) : ?>
-                                                        <a href="<?php echo base_url($this->router->fetch_class() . '/index_jogo/' . $campeonato->league_id); ?>" data-toggle="tooltip" data-placement="bottom" title="Gerenciar jogos" class="btn btn-icon btn-success text-white">
+                                                        <a href="<?php echo base_url($this->router->fetch_class() . '/index_jogo/' . $campeonato->league_id . '/' . $campeonato->name); ?>" data-toggle="tooltip" data-placement="bottom" title="Gerenciar jogos" class="btn btn-icon btn-success text-white">
                                                             <i class="ik ik-aperture"></i>
                                                         </a>
                                                     <?php endif; ?>
@@ -154,7 +154,7 @@
     <footer class="footer">
         <div class="w-100 clearfix">
             <span class="text-center text-sm-left d-md-inline-block">Copyright © <?php echo date('Y') ?> ThemeKit v2.0. Todos os direitos reservados.</span>
-            <span class="float-none float-sm-right mt-1 mt-sm-0 text-center">Criado com <i class="fa fa-file-code text-danger"></i> por <a href="https://softbean.com.br" class="text-dark" target="_blank">Softbean</a></span>
+            <span class="float-none float-sm-right mt-1 mt-sm-0 text-center">Customizado por <i class="fa fa-code"></i><a href="https://softbean.com.br" class="text-dark" target="_blank"> Softbean</a></span>
         </div>
     </footer>
 

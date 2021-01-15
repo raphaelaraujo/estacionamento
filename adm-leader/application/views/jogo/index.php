@@ -10,7 +10,7 @@
                 <div class="row align-items-end">
                     <div class="col-lg-8">
                         <div class="page-header-title">
-                            <i class="ik ik-shield bg-blue"></i>
+                            <i class="ik ik-aperture bg-blue"></i>
                             <div class="d-inline">
                                 <h5><?php echo $titulo ?></h5>                                
                                 <span><?php echo $subtitulo . '<b>' . $nome_campeonato . '</b>' ?></span>
@@ -73,25 +73,33 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Nome</th>
-                                            <th>País</th>
-                                            <th>Estadio</th>                                        
+                                            <th>Rodada</th>
+                                            <th>Local</th> 
+                                            <th>Data</th>   
+                                            <th>Mandante</th>
+                                            <th>Visitante</th>                                                                                                
+                                            <th>Situação</th>
+                                            <th>Final (tempo regular)</th>    
                                             <th class="nosort text-right pr-25">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($times as $time): ?>
+                                        <?php foreach ($jogos as $jogo): ?>
                                             <tr>
-                                                <td><?php echo $time->team_id ?></td>
-                                                <td><?php echo $time->name_team ?></td>
-                                                <td><?php echo $time->country_team ?></td>
-                                                <td><?php echo $time->venue_name ?></td>                                            
-                                                <td class="text-right">                                               
-                                                    <a data-toggle="tooltip" data-placement="bottom" title="Informações complementares" class="btn btn-icon btn-primary text-white">
-                                                        <i class="ik ik-edit"></i>
+                                                <td><?php echo $jogo->match_id ?></td>
+                                                <td><?php echo substr($jogo->round, 17) ?></td>
+                                                <td><?php echo $jogo->venue ?></td>
+                                                <td><?php echo formata_data_banco_sem_hora($jogo->event_date) ?></td>
+                                                <td><?php echo $jogo->home_team_name ?></td>
+                                                <td><?php echo $jogo->away_team_name ?></td>                                                                                                
+                                                <td><?php echo $jogo->status ?></td>
+                                                <td style="text-align: center"><b><?php echo $jogo->full_time ?></b></td>
+                                                <td class="text-right">                                                                                              
+                                                    <a data-toggle="tooltip" data-placement="bottom" title="Detalhes do jogo" href="<?php echo base_url($this->router->fetch_class() . '/info_jogo/' . $jogo->match_id); ?>" class="btn btn-icon btn-info">
+                                                        <i class="ik ik-book-open"></i>
                                                     </a>
                                                 </td>
-                                            </tr>                                                   
+                                            </tr>                                      
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>

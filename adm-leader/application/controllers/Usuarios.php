@@ -126,12 +126,12 @@ class Usuarios extends CI_Controller {
 
                     $data = elements(
                             array(
-                                'first_name',
-                                'last_name',
-                                'username',
-                                'email',
-                                'password',
-                                'active',
+                        'first_name',
+                        'last_name',
+                        'username',
+                        'email',
+                        'password',
+                        'active',
                             ), $this->input->post()
                     );
 

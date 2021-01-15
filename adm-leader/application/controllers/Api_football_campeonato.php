@@ -33,6 +33,61 @@ class Api_football_campeonato extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
+    public function index_time($league_id, $league_name) {
+
+        $data = array(
+            'titulo' => 'Times Cadastrados',
+            'subtitulo' => 'Listar times cadastrados no campeonato ',
+            'nome_campeonato' => preg_replace('/\d+/u', '', str_replace('%', ' ', $league_name)),
+            'styles' => array(
+                'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
+            ),
+            'scripts' => array(
+                'plugins/datatables.net/js/jquery.dataTables.min.js',
+                'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
+                'plugins/datatables.net/js/estacionamento.js',
+            ),
+            'times' => $this->core_football_model->get_all_football('time_league_football', array('team_league_id' => $league_id)) // get all users
+        );
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('time/index');
+        $this->load->view('layout/footer');
+    }
+
+    public function index_jogo($league_id, $league_name) {
+
+        $data = array(
+            'titulo' => 'Jogos Cadastrados',
+            'subtitulo' => 'Listar jogos cadastrados no campeonato ',
+            'nome_campeonato' => preg_replace('/\d+/u', '', str_replace('%', ' ', $league_name)),
+            'styles' => array(
+                'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
+            ),
+            'scripts' => array(
+                'plugins/datatables.net/js/jquery.dataTables.min.js',
+                'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
+                'plugins/datatables.net/js/estacionamento.js',
+            ),
+            'jogos' => $this->core_football_model->get_all_football('jogo_football', array('match_league_id' => $league_id)) // get all users
+        );
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('jogo/index');
+        $this->load->view('layout/footer');
+    }
+
+    public function info_jogo($match_id) {
+
+        $data = array(
+            'infomacao' => $this->core_football_model->get_all_jogo('jogo_football', array('match_id' => $match_id))
+        );
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('jogo/core');
+        $this->load->view('layout/footer');
+    }
+
     public function core_competicao() {
 
         $this->core_football_model->delete_registros('competicao_football');
@@ -148,60 +203,7 @@ class Api_football_campeonato extends CI_Controller {
         $this->core_league_time($league_id);
         $this->core_jogos($league_id);
         $this->session->set_flashdata('sucesso', 'Cadastro de times e jogos da competição realizado com sucesso');
-        redirect('/');
-    }
-
-    public function index_time($league_id, $league_name) {
-
-        $data = array(
-            'titulo' => 'Times Cadastrados',
-            'subtitulo' => 'Listar times cadastrados no campeonato ',
-            'nome_campeonato' => preg_replace('/\d+/u', '', str_replace('%', ' ', $league_name)),
-            'styles' => array(
-                'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
-            ),
-            'scripts' => array(
-                'plugins/datatables.net/js/jquery.dataTables.min.js',
-                'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
-                'plugins/datatables.net/js/estacionamento.js',
-            ),
-            'times' => $this->core_football_model->get_all_football('time_league_football', array('team_league_id' => $league_id)) // get all users
-        );
-
-        $this->load->view('layout/header', $data);
-        $this->load->view('time/index');
-        $this->load->view('layout/footer');
-    }
-
-    public function index_jogos($league_id) {
-
-//1 - jogo
-//rodada
-//visitante
-//mandante
-//local
-//data
-//placar
-//
-//detalhes (escalação e eventos)
-
-        $data = array(
-            'titulo' => 'Jogos Cadastrados',
-            'subtitulo' => 'Listar times cadastrados no sistema',
-            'styles' => array(
-                'plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css',
-            ),
-            'scripts' => array(
-                'plugins/datatables.net/js/jquery.dataTables.min.js',
-                'plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
-                'plugins/datatables.net/js/estacionamento.js',
-            ),
-            'jogos' => $this->core_football_model->get_all_football('jogo_football', array('match_league_id' => $league_id)) // get all users
-        );
-
-        $this->load->view('layout/header', $data);
-        $this->load->view('jogo/index');
-        $this->load->view('layout/footer');
+        redirect('api_football_campeonato');
     }
 
 }

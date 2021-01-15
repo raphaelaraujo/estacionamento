@@ -6,8 +6,9 @@ class Core_football_model extends CI_Model {
 
     public function get_all_jogo($table = null, $condition = null) {
         $this->db->select('*'
-                . ',(select logo_team from time_football WHERE home_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_home_team'
-                . ',(select logo_team from time_football WHERE away_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_away_team'
+                . ',(select logo_team from time_league_football WHERE home_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_home_team'
+                . ',(select logo_team from time_league_football WHERE away_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_away_team'
+                . ',(select name from competicao_football WHERE match_league_id = league_id limit 1) as league_id'
                 . ',SUBSTRING(ROUND, 18, 2) AS rodada');
         $this->db->where($condition);
         return $this->db->get($table)->result();
@@ -43,7 +44,7 @@ class Core_football_model extends CI_Model {
     public function get_group_football($table = null, $group_field = null) {
 
         if ($table && $this->db->table_exists($table)) {
-          
+
             $this->db->group_by($group_field);
 
             return $this->db->get($table)->result();
