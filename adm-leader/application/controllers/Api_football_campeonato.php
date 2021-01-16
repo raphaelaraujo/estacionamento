@@ -79,8 +79,72 @@ class Api_football_campeonato extends CI_Controller {
 
     public function info_jogo($match_id) {
 
+        $home_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'home_team_name');
+        $away_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'away_team_name');
+
+        $operacao = "lineups/" . $match_id;
+        $resposta = $this->api_model->executa_api_football($operacao);
+
+        foreach ($resposta as $value) {
+
+            $coach_home = $value->lineUps->$home_team->coach;
+            $formation_home = $value->lineUps->$home_team->formation;
+
+            $coach_away = $value->lineUps->$away_team->coach;
+            $formation_away = $value->lineUps->$home_team->formation;
+
+            //home_team
+            $qtd_principal = count($value->lineUps->$home_team->startXI);
+            $qtd_substituto = count($value->lineUps->$home_team->substitutes);
+
+            for ($contador = 0; $contador < $qtd_principal; $contador++) {
+
+                $data_player_start_home[] = array(
+                    'player' => $value->lineUps->$home_team->startXI[$contador]->player,
+                    'number' => $value->lineUps->$home_team->startXI[$contador]->number
+                );
+            }
+
+            for ($contador = 0; $contador < $qtd_substituto; $contador++) {
+                $data_player_substitute_home[] = array(
+                    'player' => $value->lineUps->$home_team->substitutes[$contador]->player,
+                    'number' => $value->lineUps->$home_team->substitutes[$contador]->number
+                );
+            }
+
+
+            //away_team
+            $qtd_principal_away = count($value->lineUps->$away_team->startXI);
+            $qtd_substituto_away = count($value->lineUps->$away_team->substitutes);
+
+            for ($contador = 0; $contador < $qtd_principal_away; $contador++) {
+
+                $data_player_start_away[] = array(
+                    'player' => $value->lineUps->$away_team->startXI[$contador]->player,
+                    'number' => $value->lineUps->$away_team->startXI[$contador]->number
+                );
+            }
+
+            for ($contador = 0; $contador < $qtd_substituto_away; $contador++) {
+                $data_player_substitute_away[] = array(
+                    'player' => $value->lineUps->$away_team->substitutes[$contador]->player,
+                    'number' => $value->lineUps->$away_team->substitutes[$contador]->number
+                );
+            }
+        }
+
         $data = array(
-            'infomacao' => $this->core_football_model->get_all_jogo('jogo_football', array('match_id' => $match_id))
+            'infomacao' => $this->core_football_model->get_all_jogo('jogo_football', array('match_id' => $match_id)),
+            'coach_home' => $coach_home,
+            'formation_home' => $formation_home,
+            'coach_away' => $coach_away,
+            'formation_away' => $formation_away,
+            'home_start' => $data_player_start_home,
+            'home_subst' => $data_player_substitute_home,
+            'away_start' => $data_player_start_away,
+            'away_subst' => $data_player_substitute_away,
+            'name_home' => $home_team,
+            'name_away' => $away_team
         );
 
         $this->load->view('layout/header', $data);

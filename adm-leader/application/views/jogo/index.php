@@ -99,7 +99,7 @@
                                                         <i class="ik ik-book-open"></i>
                                                     </a>
                                                 </td>
-                                            </tr>                                      
+                                            </tr>                                           
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>

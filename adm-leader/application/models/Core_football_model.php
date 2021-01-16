@@ -14,6 +14,12 @@ class Core_football_model extends CI_Model {
         return $this->db->get($table)->result();
     }
 
+    public function get_field_value($table = null, $condition = null, $field = null) {
+        $this->db->select('*');
+        $this->db->where($condition);
+        return $this->db->get($table)->row()->$field;
+    }
+
     public function get_all($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table)) {
