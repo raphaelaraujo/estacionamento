@@ -12,26 +12,25 @@
                         <div class="card-body">
                             <form class="forms-sample" name="form_core">
                                 <?php foreach ($infomacao as $info): ?>
-
                                     <div class="row">
-                                        <div class="col-md-auto">
+                                        <div class="col-md-12">
                                             <div class="card task-board">                                               
                                                 <div class="card-body todo-task">
                                                     <div class="container">
                                                         <div class="row">
-                                                            <div class="col-sm">
+                                                            <div class="col-sm" style="text-align: center">
                                                                 <img src="<?php echo $info->logo_home_team ?>" width="100" height="100">                                                                
                                                             </div>
-                                                            <div class="col-sm">  
+                                                            <div class="col-sm" style="text-align: center">  
                                                                 <h4><?php echo $info->goals_home_team ?></h4>
                                                             </div>       
-                                                            <div class="col-sm"> 
+                                                            <div class="col-sm" style="text-align: center"> 
                                                                 <h2>X</h2>
                                                             </div>
-                                                            <div class="col-sm">    
+                                                            <div class="col-sm" style="text-align: center">    
                                                                 <h4><?php echo $info->goals_away_team ?></h4>   
                                                             </div>
-                                                            <div class="col-sm">
+                                                            <div class="col-sm" style="text-align: center">
                                                                 <img src="<?php echo $info->logo_away_team ?>" width="100" height="100">                                                                
                                                             </div>
                                                         </div>
@@ -42,8 +41,61 @@
                                     </div>
                                 <?php endforeach; ?>
 
+                                <div class="col-md-12">
+                                    <div class="card task-board">
+                                        <div class="card-header">
+                                            <h2>Estatisticas</h2>                                                 
+                                        </div>
+                                        <div class="card-body todo-task">
+                                            <div class="container">                                                    
+                                                <div class="row">
+
+                                                    <div class="col-sm" style="text-align: center">
+                                                        <h5><?php echo $name_home ?> </h5><br/><br/><br/>  
+                                                        <h6><?php echo $stats['shots_on_goal_home'] ?></h6>
+                                                        <h6><?php echo $stats['fouls_home'] ?></h6>
+                                                        <h6><?php echo $stats['corner_kicks_home'] ?></h6>
+                                                        <h6><?php echo $stats['offsides_home'] ?></h6>
+                                                        <h6><?php echo $stats['ball_possession_home'] ?></h6>
+                                                        <h6><?php echo $stats['passes_accurate_home'] ?></h6>
+                                                        <h6><?php echo $stats['passes_precision_home'] ?></h6>
+                                                        <h6><?php echo isset($stats['yellow_cards_home']) ? $stats['yellow_cards_home'] : 0 ?></h6>
+                                                        <h6><?php echo isset($stats['red_cards_home']) ? $stats['red_cards_home'] : 0 ?></h6>                                                        
+                                                    </div>
+
+                                                    <div class="col-sm" style="text-align: center"> 
+                                                        <h5>Estatisticas dos times</h5><br/><br/><br/>   
+                                                        <h6><b>Chutes ao gol</b></h6>
+                                                        <h6><b>Faltas</b></h6>
+                                                        <h6><b>Escanteios</b></h6>
+                                                        <h6><b>Impedimentos</b></h6>
+                                                        <h6><b>Pose de bola</b></h6>
+                                                        <h6><b>Passes</b></h6>
+                                                        <h6><b>Precisão de passe</b></h6>
+                                                        <h6><b>Cartões amarelos</b></h6>
+                                                        <h6><b>Cartões vemelhos</b></h6>
+                                                    </div>
+
+                                                    <div class="col-sm" style="text-align: center"> 
+                                                        <h5><?php echo $name_away ?> </h5><br/><br/><br/>   
+                                                        <h6><?php echo $stats['shots_on_goal_away'] ?></h6>
+                                                        <h6><?php echo $stats['fouls_away'] ?></h6>
+                                                        <h6><?php echo $stats['corner_kicks_away'] ?></h6>
+                                                        <h6><?php echo $stats['offsides_away'] ?></h6>
+                                                        <h6><?php echo $stats['ball_possession_away'] ?></h6>
+                                                        <h6><?php echo $stats['passes_accurate_away'] ?></h6>
+                                                        <h6><?php echo $stats['passes_precision_away'] ?></h6>
+                                                        <h6><?php echo isset($stats['yellow_cards_away']) ? $stats['yellow_cards_away'] : 0 ?></h6>
+                                                        <h6><?php echo isset($stats['red_cards_away']) ? $stats['red_cards_away'] : 0 ?></h6>
+                                                    </div>                                                        
+                                                </div>                                                    
+                                            </div>             
+                                        </div>
+                                    </div>
+                                </div>                                    
+
                                 <div class="row">
-                                    <div class="col-md-auto">
+                                    <div class="col-md-12">
                                         <div class="card task-board">
                                             <div class="card-header">
                                                 <h2>Escalações</h2>                                                
@@ -89,16 +141,7 @@
                                                 </div>                                               
                                             </div>
                                         </div>
-                                    </div>        
-                                    <div class="col-md-8">
-                                        <div class="card task-board">
-                                            <div class="card-header">
-                                                <h3>Estatisticas</h3>                                                
-                                            </div>
-                                            <div class="card-body todo-task">
-                                            </div>
-                                        </div>
-                                    </div>                                    
+                                    </div>                                            
                                 </div>
 
 

@@ -93,12 +93,15 @@
                                                 <td><?php echo $jogo->home_team_name ?></td>
                                                 <td><?php echo $jogo->away_team_name ?></td>                                                                                                
                                                 <td><?php echo $jogo->status ?></td>
-                                                <td style="text-align: center"><b><?php echo $jogo->full_time ?></b></td>
-                                                <td class="text-right">                                                                                              
-                                                    <a data-toggle="tooltip" data-placement="bottom" title="Detalhes do jogo" href="<?php echo base_url($this->router->fetch_class() . '/info_jogo/' . $jogo->match_id); ?>" class="btn btn-icon btn-info">
-                                                        <i class="ik ik-book-open"></i>
-                                                    </a>
+                                                <td style="text-align: center"><b><?php echo $jogo->full_time ?></b></td>                                                
+                                                <td class="text-right">                                             
+                                                    <?php if ($jogo->status_code == 'FT' || $jogo->status_code == 'AET' || $jogo->status_code == 'PEN'): ?>
+                                                        <a data-toggle="tooltip" data-placement="bottom" title="Detalhes do jogo" href="<?php echo base_url($this->router->fetch_class() . '/info_jogo/' . $jogo->match_id); ?>" class="btn btn-icon btn-info">
+                                                            <i class="ik ik-book-open"></i>                                                            
+                                                        </a>
+                                                    <?php endif; ?>
                                                 </td>
+
                                             </tr>                                           
                                         <?php endforeach; ?>
                                     </tbody>

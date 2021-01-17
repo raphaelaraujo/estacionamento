@@ -13,6 +13,24 @@ class Home extends CI_Controller {
     }
 
     public function index() {
+//        
+//        $operacao = "statistics/fixture/327985";
+//        $resposta = $this->api_model->executa_api_football($operacao);
+//        
+//        echo json_encode($resposta);
+//        
+//        exit();
+//
+//        $var = sprintf("%s %s %s", 'Shots', 'on', 'Goal');
+//
+//        foreach ($resposta as $value) {
+//            echo json_encode($value->statistics->$var->home);
+//        }
+//
+//        exit();
+//
+//        //327989
+
         $data = array(
             'titulo' => 'Home'
         );

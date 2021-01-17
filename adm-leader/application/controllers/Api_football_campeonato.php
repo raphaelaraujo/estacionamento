@@ -82,8 +82,42 @@ class Api_football_campeonato extends CI_Controller {
         $home_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'home_team_name');
         $away_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'away_team_name');
 
+        $var01 = "Shots on Goal";
+        $var02 = "Fouls";
+        $var03 = "Corner Kicks";
+        $var04 = "Offsides";
+        $var05 = "Ball Possession";
+        $var06 = "Yellow Cards";
+        $var07 = "Red Cards";
+        $var08 = "Total passes";
+        $var09 = "Passes %";
+
         $operacao = "lineups/" . $match_id;
         $resposta = $this->api_model->executa_api_football($operacao);
+
+        $operacao_estats = "statistics/fixture/" . $match_id;
+        $resposta_estats = $this->api_model->executa_api_football($operacao_estats);
+
+        foreach ($resposta_estats as $value) {
+            $data_stats['shots_on_goal_home'] = $value->statistics->$var01->home;
+            $data_stats['shots_on_goal_away'] = $value->statistics->$var01->away;
+            $data_stats['fouls_home'] = $value->statistics->$var02->home;
+            $data_stats['fouls_away'] = $value->statistics->$var02->away;
+            $data_stats['corner_kicks_home'] = $value->statistics->$var03->home;
+            $data_stats['corner_kicks_away'] = $value->statistics->$var03->away;
+            $data_stats['offsides_home'] = $value->statistics->$var04->home;
+            $data_stats['offsides_away'] = $value->statistics->$var04->away;
+            $data_stats['ball_possession_home'] = $value->statistics->$var05->home;
+            $data_stats['ball_possession_away'] = $value->statistics->$var05->away;
+            $data_stats['yellow_cards_home'] = $value->statistics->$var06->home;
+            $data_stats['yellow_cards_away'] = $value->statistics->$var06->away;
+            $data_stats['red_cards_home'] = $value->statistics->$var07->home;
+            $data_stats['red_cards_away'] = $value->statistics->$var07->away;
+            $data_stats['passes_accurate_home'] = $value->statistics->$var08->home;
+            $data_stats['passes_accurate_away'] = $value->statistics->$var08->away;
+            $data_stats['passes_precision_home'] = $value->statistics->$var09->home;
+            $data_stats['passes_precision_away'] = $value->statistics->$var09->away;
+        }
 
         foreach ($resposta as $value) {
 
@@ -144,7 +178,8 @@ class Api_football_campeonato extends CI_Controller {
             'away_start' => $data_player_start_away,
             'away_subst' => $data_player_substitute_away,
             'name_home' => $home_team,
-            'name_away' => $away_team
+            'name_away' => $away_team,
+            'stats' => $data_stats,
         );
 
         $this->load->view('layout/header', $data);
