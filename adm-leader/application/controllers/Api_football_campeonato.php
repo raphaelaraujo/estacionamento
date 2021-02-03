@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('Ação não permitida');
+defined('BASEPATH') or exit('Ação não permitida');
 
-class Api_football_campeonato extends CI_Controller {
+class Api_football_campeonato extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         if (!$this->ion_auth->logged_in()) {
@@ -12,7 +14,8 @@ class Api_football_campeonato extends CI_Controller {
         }
     }
 
-    public function index() {
+    public function index()
+    {
 
         $data = array(
             'titulo' => 'Campeonatos Cadastrados',
@@ -33,7 +36,8 @@ class Api_football_campeonato extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function index_time($league_id, $league_name) {
+    public function index_time($league_id, $league_name)
+    {
 
         $data = array(
             'titulo' => 'Times Cadastrados',
@@ -55,7 +59,8 @@ class Api_football_campeonato extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function index_jogo($league_id, $league_name) {
+    public function index_jogo($league_id, $league_name)
+    {
 
         $data = array(
             'titulo' => 'Jogos Cadastrados',
@@ -77,7 +82,8 @@ class Api_football_campeonato extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function info_jogo($match_id) {
+    public function info_jogo($match_id)
+    {
 
         $home_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'home_team_name');
         $away_team = $this->core_football_model->get_field_value('jogo_football', array('match_id' => $match_id), 'away_team_name');
@@ -187,7 +193,8 @@ class Api_football_campeonato extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-    public function core_competicao() {
+    public function core_competicao()
+    {
 
         $this->core_football_model->delete_registros('competicao_football');
 
@@ -222,7 +229,8 @@ class Api_football_campeonato extends CI_Controller {
         }
     }
 
-    public function core_league_time($league_id) {
+    public function core_league_time($league_id)
+    {
 
         $operacao = "teams/league/" . $league_id;
         $resposta = $this->api_model->executa_api_football($operacao);
@@ -261,7 +269,8 @@ class Api_football_campeonato extends CI_Controller {
         }
     }
 
-    public function core_jogos($league_id) {
+    public function core_jogos($league_id)
+    {
 
         $operacao = "fixtures/league/" . $league_id;
         $resposta = $this->api_model->executa_api_football($operacao);
@@ -297,12 +306,48 @@ class Api_football_campeonato extends CI_Controller {
         }
     }
 
-    public function core_geral($league_id) {
+    public function cron_jogos()
+    {
+        
+        $resposta = $this->core_football_model->get_live('jogo_football');
+        
+        foreach ($resposta as $value) {
+        
+            $operacao = "fixtures/id/" . $value->match_id;
+            $jogo_ao_vivo = $this->api_model->executa_api_football($operacao);
+
+            foreach ($jogo_ao_vivo as $jogo) {
+                $qtd = $jogo->results;
+
+                for ($contador = 0; $contador < $qtd; $contador++) {
+
+                    if ($this->core_model->get_by_id('jogo_football', array('match_id' => $jogo->fixtures[$contador]->fixture_id))) {
+                        echo $jogo->fixtures[$contador]->homeTeam->team_name 
+                        . " x " . $jogo->fixtures[$contador]->awayTeam->team_name;
+                        $data['status'] = $jogo->fixtures[$contador]->status;
+                        $data['status_code'] = $jogo->fixtures[$contador]->statusShort;
+                        $data['goals_home_team'] = $jogo->fixtures[$contador]->goalsHomeTeam;
+                        $data['goals_away_team'] = $jogo->fixtures[$contador]->goalsAwayTeam;
+                        $data['half_time'] = $jogo->fixtures[$contador]->score->halftime;
+                        $data['full_time'] = $jogo->fixtures[$contador]->score->fulltime;
+                        $data['extra_time'] = $jogo->fixtures[$contador]->score->extratime;
+                        $data['penalty'] = $jogo->fixtures[$contador]->score->penalty;
+
+                        $this->core_football_model->update('jogo_football', $data, array('match_id' => $jogo->fixtures[$contador]->fixture_id));
+                    }
+
+                    var_dump($data);
+                }
+            }
+        }
+    }
+
+    public function core_geral($league_id)
+    {
 
         $this->core_league_time($league_id);
         $this->core_jogos($league_id);
         $this->session->set_flashdata('sucesso', 'Cadastro de times e jogos da competição realizado com sucesso');
         redirect('api_football_campeonato');
     }
-
 }
