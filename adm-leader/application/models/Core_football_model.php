@@ -1,37 +1,26 @@
 <?php
 
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Core_football_model extends CI_Model
-{
+class Core_football_model extends CI_Model {
 
-    public function get_all_jogo($table = null, $condition = null)
-    {
+    public function get_all_jogo($table = null, $condition = null) {
         $this->db->select('*'
-            . ',(select logo_team from time_league_football WHERE home_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_home_team'
-            . ',(select logo_team from time_league_football WHERE away_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_away_team'
-            . ',(select name from competicao_football WHERE match_league_id = league_id limit 1) as league_id'
-            . ',SUBSTRING(ROUND, 18, 2) AS rodada');
+                . ',(select logo_team from time_league_football WHERE home_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_home_team'
+                . ',(select logo_team from time_league_football WHERE away_team_id = team_id and match_league_id = team_league_id limit 1 ) as logo_away_team'
+                . ',(select name from competicao_football WHERE match_league_id = league_id limit 1) as league_id'
+                . ',SUBSTRING(ROUND, 18, 2) AS rodada');
         $this->db->where($condition);
         return $this->db->get($table)->result();
     }
 
-    public function get_live($table = null)
-    {
-        $this->db->select('*');
-        $this->db->where("DATE_FORMAT(event_date, '%Y-%m-%d') = curdate()");
-        return $this->db->get($table)->result();
-    }
-
-    public function get_field_value($table = null, $condition = null, $field = null)
-    {
+    public function get_field_value($table = null, $condition = null, $field = null) {
         $this->db->select('*');
         $this->db->where($condition);
         return $this->db->get($table)->row()->$field;
     }
 
-    public function get_all($table = null, $condition = null)
-    {
+    public function get_all($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table)) {
 
@@ -45,8 +34,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function get_all_football($table = null, $condition = null)
-    {
+    public function get_all_football($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table)) {
 
@@ -59,8 +47,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function get_group_football($table = null, $group_field = null)
-    {
+    public function get_group_football($table = null, $group_field = null) {
 
         if ($table && $this->db->table_exists($table)) {
 
@@ -72,8 +59,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function get_all_in($table = null, $campo = null, $value = null, $order_field = null)
-    {
+    public function get_all_in($table = null, $campo = null, $value = null, $order_field = null) {
 
         if ($table && $this->db->table_exists($table)) {
 
@@ -88,8 +74,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function get_all_join()
-    {
+    public function get_all_join() {
         $this->db->select('*');
         $this->db->from('competicoes');
         $this->db->where('EXISTS (select * from `eventos` WHERE `competicoes`.`id` = `eventos`.`id_competicao` and `eventos`.`data_cadastro_evento` >= CURDATE())');
@@ -97,13 +82,11 @@ class Core_football_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    public function delete_registros($table)
-    {
+    public function delete_registros($table) {
         $this->db->empty_table($table);
     }
 
-    public function get_by_id($table = null, $condition = null)
-    {
+    public function get_by_id($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table) && is_array($condition)) {
 
@@ -116,8 +99,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function insert($table = null, $data = null, $get_last_id = null)
-    {
+    public function insert($table = null, $data = null, $get_last_id = null) {
 
         if ($table && $this->db->table_exists($table) && is_array($data)) {
 
@@ -140,8 +122,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function update($table = null, $data = null, $condition = null)
-    {
+    public function update($table = null, $data = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table) && is_array($data) && is_array($condition)) {
 
@@ -155,8 +136,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function delete($table = null, $condition = null)
-    {
+    public function delete($table = null, $condition = null) {
 
         if ($table && $this->db->table_exists($table) && is_array($condition)) {
 
@@ -172,8 +152,7 @@ class Core_football_model extends CI_Model
         }
     }
 
-    public function generate_unique_code($table = null, $type_code = null, $cod_size = null, $search_field = null)
-    {
+    public function generate_unique_code($table = null, $type_code = null, $cod_size = null, $search_field = null) {
 
         do {
 
@@ -184,4 +163,5 @@ class Core_football_model extends CI_Model
 
         return $codigo;
     }
+
 }

@@ -75,7 +75,7 @@
                                             <th>#</th>
                                             <th>Rodada</th>
                                             <th>Local</th> 
-                                            <th>Data</th>   
+                                            <th>Data/hora</th>   
                                             <th>Mandante</th>
                                             <th>Visitante</th>                                                                                                
                                             <th>Situação</th>
@@ -89,17 +89,17 @@
                                                 <td><?php echo $jogo->match_id ?></td>
                                                 <td><?php echo substr($jogo->round, 17) ?></td>
                                                 <td><?php echo $jogo->venue ?></td>
-                                                <td><?php echo formata_data_banco_sem_hora($jogo->event_date) ?></td>
+                                                <td><?php echo date_format(date_create($jogo->event_date), 'd/m/Y H:i') ?></td>
                                                 <td><?php echo $jogo->home_team_name ?></td>
                                                 <td><?php echo $jogo->away_team_name ?></td>                                                                                                
                                                 <td><?php echo $jogo->status ?></td>
                                                 <td style="text-align: center"><b><?php echo $jogo->full_time ?></b></td>                                                
                                                 <td class="text-right">                                             
-                                                    <?php if ($jogo->status_code == 'FT' || $jogo->status_code == 'AET' || $jogo->status_code == 'PEN'): ?>
+                                                    <!--<?php if ($jogo->status_code == 'FT' || $jogo->status_code == 'AET' || $jogo->status_code == 'PEN'): ?>-->
                                                         <a data-toggle="tooltip" data-placement="bottom" title="Detalhes do jogo" href="<?php echo base_url($this->router->fetch_class() . '/info_jogo/' . $jogo->match_id); ?>" class="btn btn-icon btn-info">
                                                             <i class="ik ik-book-open"></i>                                                            
                                                         </a>
-                                                    <?php endif; ?>
+                                                        <!--<?php endif; ?>-->
                                                 </td>
 
                                             </tr>                                           

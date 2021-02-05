@@ -17,7 +17,7 @@
                                             <div class="card task-board">                                               
                                                 <div class="card-body todo-task">
                                                     <div class="container">
-                                                        <div class="row">
+                                                        <div class="row">                                                            
                                                             <div class="col-sm" style="text-align: center">
                                                                 <img src="<?php echo $info->logo_home_team ?>" width="100" height="100">                                                                
                                                             </div>

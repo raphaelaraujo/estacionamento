@@ -104,7 +104,7 @@
                                                     <?php endif; ?>
 
                                                     <?php if ($this->core_model->get_by_id('jogo_football', array('match_league_id ' => $campeonato->league_id))) : ?>
-                                                        <a href="<?php echo base_url($this->router->fetch_class() . '/index_jogo/' . $campeonato->league_id . '/' . $campeonato->name); ?>" data-toggle="tooltip" data-placement="bottom" title="Gerenciar jogos" class="btn btn-icon btn-success text-white">
+                                                        <a href="<?php echo base_url($this->router->fetch_class() . '/index_jogo_update/' . $campeonato->league_id . '/' . $campeonato->name); ?>" data-toggle="tooltip" data-placement="bottom" title="Gerenciar jogos" class="btn btn-icon btn-success text-white">
                                                             <i class="ik ik-aperture"></i>
                                                         </a>
                                                     <?php endif; ?>
