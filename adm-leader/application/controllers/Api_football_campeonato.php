@@ -327,6 +327,42 @@ class Api_football_campeonato extends CI_Controller {
             }
         }
     }
+	
+	public function cron_jogos()
+    {
+        
+        $resposta = $this->core_football_model->get_live('jogo_football');
+        
+        foreach ($resposta as $value) {
+        
+            $operacao = "fixtures/id/" . $value->match_id;
+            $jogo_ao_vivo = $this->api_model->executa_api_football($operacao);
+
+            foreach ($jogo_ao_vivo as $jogo) {
+                $qtd = $jogo->results;
+
+                for ($contador = 0; $contador < $qtd; $contador++) {
+
+                    if ($this->core_model->get_by_id('jogo_football', array('match_id' => $jogo->fixtures[$contador]->fixture_id))) {
+                        echo $jogo->fixtures[$contador]->homeTeam->team_name 
+                        . " x " . $jogo->fixtures[$contador]->awayTeam->team_name;
+                        $data['status'] = $jogo->fixtures[$contador]->status;
+                        $data['status_code'] = $jogo->fixtures[$contador]->statusShort;
+                        $data['goals_home_team'] = $jogo->fixtures[$contador]->goalsHomeTeam;
+                        $data['goals_away_team'] = $jogo->fixtures[$contador]->goalsAwayTeam;
+                        $data['half_time'] = $jogo->fixtures[$contador]->score->halftime;
+                        $data['full_time'] = $jogo->fixtures[$contador]->score->fulltime;
+                        $data['extra_time'] = $jogo->fixtures[$contador]->score->extratime;
+                        $data['penalty'] = $jogo->fixtures[$contador]->score->penalty;
+
+                        $this->core_football_model->update('jogo_football', $data, array('match_id' => $jogo->fixtures[$contador]->fixture_id));
+                    }
+
+                    var_dump($data);
+                }
+            }
+        }
+    }
 
     public function core_geral($league_id) {
 

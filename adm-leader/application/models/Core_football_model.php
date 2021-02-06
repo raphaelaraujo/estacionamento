@@ -13,6 +13,13 @@ class Core_football_model extends CI_Model {
         $this->db->where($condition);
         return $this->db->get($table)->result();
     }
+	
+	public function get_live($table = null)
+    {
+        $this->db->select('*');
+        $this->db->where("DATE_FORMAT(event_date, '%Y-%m-%d') = curdate()");
+        return $this->db->get($table)->result();
+    }
 
     public function get_field_value($table = null, $condition = null, $field = null) {
         $this->db->select('*');
